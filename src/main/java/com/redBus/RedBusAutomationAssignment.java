@@ -29,8 +29,8 @@ public class RedBusAutomationAssignment {
 		By searchSuggestionSelectionLocator = By.xpath("//div[contains(@class,\"searchSuggestionWrapper\")]");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(searchSuggestionSelectionLocator));
 
-		selectlocation(wd, wait,"nagpur");
-		selectlocation(wd,wait,"pune");
+		selectlocation(wd, wait,"pune");
+		selectlocation(wd,wait,"mumbai");
 		
 		 By searchButtonLocator = By.xpath("//button[contains(@class,\"searchButtonWrapper\")]");
 		 WebElement searchButton=wd.findElement(searchButtonLocator);
@@ -51,26 +51,29 @@ public class RedBusAutomationAssignment {
 		 if(wait.until(ExpectedConditions.textToBePresentInElementLocated(subtitleLocator,"buses"))) {
 		subtitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(subtitleLocator)); 
 		 }
+		 
 		 System.out.println(subtitleElement.getText());
 		 
 		 By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')]");
-		  By tuppleWrapperLocator = By.xpath("//li[contains(@class,'tupleWrapper')]");
-		  JavascriptExecutor js = (JavascriptExecutor)wd;
+		  
+		 By tuppleWrapperLocator = By.xpath("//li[contains(@class,'tupleWrapper')]");
+		 
+		 JavascriptExecutor js = (JavascriptExecutor)wd;
 		     while(true) {  //Lazy Loading
-		    	 List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tuppleWrapperLocator));
+		    	 List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tuppleWrapperLocator));// when web page load 1st time it load all the element (available buses)into list
 		    	 List<WebElement>endOfList=wd.findElements(By.xpath("//span[contains(@class,'endText')]"));
 		    	
 		    	 if(!endOfList.isEmpty()) {  //exist condition for while loop
 		    		break;
 		    	}
-		    js.executeScript("arguments[0].scrollIntoView({behavior:'smooth'})", rowList.get(rowList.size()-3));
+		    js.executeScript("arguments[0].scrollIntoView({behavior:'smooth'})", rowList.get(rowList.size()-3));  //scroll the page and load the remaining buses if it is available 
 		     }
-		     List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tuppleWrapperLocator));
+		     List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tuppleWrapperLocator)); // capturing all the webelement which is loaded after scrolling of web page 
 		     for(WebElement row:rowList) {
 		    System.out.println(row.findElement(busesNameLocator).getText());
 		     } 
 		    System.out.println("total no of buses loaded "+ rowList.size());
-		    
+		     
 		    wd.quit();
 		     
 	}
