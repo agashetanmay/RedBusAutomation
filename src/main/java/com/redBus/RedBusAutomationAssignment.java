@@ -18,6 +18,7 @@ public class RedBusAutomationAssignment {
 		ChromeOptions chromeoption = new ChromeOptions();
 
 		chromeoption.addArguments("--start-maximized");
+		chromeoption.addArguments("--headless=new");
 
 		WebDriver wd = new ChromeDriver(chromeoption);
 		WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(20));
